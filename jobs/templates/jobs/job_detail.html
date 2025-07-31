@@ -1,0 +1,17 @@
+{% extends 'jobs/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h3>{{ job.title }}</h3>
+        <p><strong>Company:</strong> {{ job.company_name }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p><strong>Posted on:</strong> {{ job.created_at|date:"F d, Y" }}</p>
+        <p><strong>Description:</strong></p>
+        <p>{{ job.description|linebreaks }}</p>
+        {% if user.is_authenticated and not user.profile.is_employer %}
+        <a href="{% url 'jobs:job_apply' job.pk %}" class="btn btn-primary">Apply Now</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

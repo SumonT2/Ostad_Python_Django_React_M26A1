@@ -1,0 +1,17 @@
+{% extends 'jobs/base.html' %}
+
+{% block content %}
+<h2>Applicant Dashboard</h2>
+<h3>Your Applications</h3>
+{% for application in applications %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ application.job.title }}</h5>
+        <p class="card-text">{{ application.job.company_name }} - {{ application.job.location }}</p>
+        <p class="card-text">Applied on: {{ application.applied_at|date:"F d, Y" }}</p>
+    </div>
+</div>
+{% empty %}
+<p>No applications submitted yet.</p>
+{% endfor %}
+{% endblock %}

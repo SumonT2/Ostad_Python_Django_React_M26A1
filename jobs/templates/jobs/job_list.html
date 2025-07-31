@@ -1,0 +1,23 @@
+{% extends 'jobs/base.html' %}
+
+{% block content %}
+<h2>Available Jobs</h2>
+<form method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search by title, company, or location" value="{{ query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+{% for job in jobs %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ job.title }}</h5>
+        <p class="card-text">{{ job.company_name }} - {{ job.location }}</p>
+        <a href="{% url 'jobs:job_detail' job.pk %}" class="btn btn-primary">View Details</a>
+    </div>
+</div>
+{% empty %}
+<p>No jobs found.</p>
+{% endfor %}
+{% endblock %}

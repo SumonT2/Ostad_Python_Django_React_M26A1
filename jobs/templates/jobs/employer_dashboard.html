@@ -1,0 +1,54 @@
+{% extends 'jobs/base.html' %}
+
+{% block content %}
+<h2>Applicant Dashboard</h2>
+
+<div class="mb-4">
+    <form method="GET" class="d-flex gap-2">
+        <select name="status" class="form-select w-auto">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="approved" {% if status == 'approved' %}selected{% endif %}>Approved</option>
+            <option value="rejected" {% if status == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
+
+<h3>Your Applications</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Applied On</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.job.title }}</td>
+                <td>{{ application.job.company_name }}</td>
+                <td>{{ application.job.location }}</td>
+                <td>{{ application.applied_at|date:"F d, Y" }}</td>
+                <td>
+                    <span class="badge 
+                        {% if application.status == 'APPROVED' %}bg-success
+                        {% elif application.status == 'REJECTED' %}bg-danger
+                        {% else %}bg-secondary{% endif %}">
+                        {{ application.status|title }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No applications submitted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
